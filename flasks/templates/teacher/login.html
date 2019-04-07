@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block nav %}
-  <h1>{% block name %}Student{% endblock %}</h1>
+  <h1>{% block name %}Teacher{% endblock %}</h1>
   <ul>
-    {% if g.student %}
-      <li><span>{{ g.student['username'] }}</span>
-      <li><a href="{{ url_for('student.logout') }}">Log Out</a>
+    {% if g.teacher %}
+      <li><span>{{ g.teacher['username'] }}</span>
+      <li><a href="{{ url_for('teacher.logout') }}">Log Out</a>
     {% else %}
-      <li><a href="{{ url_for('student.register') }}">Register</a>
-      <li><a href="{{ url_for('student.login') }}">Log In</a>
+      <li><a href="{{ url_for('teacher.register') }}">Register</a>
+      <li><a href="{{ url_for('teacher.login') }}">Log In</a>
     {% endif %}
   </ul>
 {% endblock %}
