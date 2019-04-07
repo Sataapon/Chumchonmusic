@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Register{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="username">Username</label>
+    <input name="username" id="username" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+    <label for="firstname">Firstname</label>
+    <input name="Firstname" id="firstname" required>
+    <label for="lastname">Lastname</label>
+    <input name="lastname" id="lastname" required>
+    <label for="nickname">Nickname</label>
+    <input name="nickname" id="nickname" required>
+    <label for="birthday">Birthday</label>
+    <input type="date" name="birthday" id="birthday" min="1919-04-07" max="2019-04-07"required>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
+    <label for="telnum">Telephone Number</label>
+    <input type="tel" name="telnum" id="telnum" pattern="^(?([0-9]{3}))*-([0-9]{3})*-([0-9]{4})$" placeholder="xxx-xxx-xxxx" required>
+    {#<label for="lineid">Line ID</label>
+    <input name="lineid" id="lineid">
+    <label for="image">Image</label>
+    <input type="file" name="image" id="image">#}
+    <input type="submit" value="Register">
+  </form>
+{% endblock %}

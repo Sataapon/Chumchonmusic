@@ -24,8 +24,17 @@ def create_app(test_config=None):
     except OSError:
         pass
     
+    # a simple page that says hello
+    @app.route('/hello')
+    def hello():
+        return 'Hello, World!'
+
     # register the database
     from . import db
     db.init_app(app)
+
+    # apply the blueprints to the app
+    from . import student
+    app.register_blueprint(student.bp)
 
     return app

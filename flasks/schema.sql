@@ -21,9 +21,9 @@ CREATE TABLE Teacher (
 	Firstname TEXT NOT NULL,
 	Lastname TEXT NOT NULL,
 	Nickname TEXT NOT NULL,
-	Birthday TEXT,
-	Email TEXT UNIQUE,
-	TelNum INTEGER UNIQUE,
+	Birthday TEXT NOT NULL,
+	Email TEXT UNIQUE NOT NULL,
+	TelNum TEXT UNIQUE NOT NULL,
 	LineId TEXT UNIQUE,
 	Image BLOB
 );
@@ -35,9 +35,9 @@ CREATE TABLE Student (
 	Firstname TEXT NOT NULL,
 	Lastname TEXT NOT NULL,
 	Nickname TEXT NOT NULL,
-	Birthday TEXT,
-	Email TEXT UNIQUE,
-	TelNum INTEGER UNIQUE,
+	Birthday TEXT NOT NULL,
+	Email TEXT UNIQUE NOT NULL,
+	TelNum TEXT UNIQUE NOT NULL,
 	LineId TEXT UNIQUE,
 	Image BLOB
 );
