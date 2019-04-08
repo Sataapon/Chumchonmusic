@@ -83,3 +83,26 @@ def login():
     
     return render_template('admin/login.html')
 
+@bp.route('/logout')
+def logout():
+    """Clear the current session, including the stored student id."""
+    session.clear()
+    return redirect(url_for('index'))
+
+@bp.route('/students')
+def students():
+    db = get_db()
+    students = db.execute(
+        'SELECT StudentId, Firstname, Lastname, Nickname FROM Student'
+    ).fetchall()
+    return render_template('admin/students.html', students=students)
+
+
+@bp.route('/teachers')
+def teachers():
+    db = get_db()
+    teachers = db.execute(
+        'SELECT TeacherId, Firstname, Lastname, Nickname FROM Teacher'
+    ).fetchall()
+    return render_template('admin/teachers.html', teachers=teachers)
+
