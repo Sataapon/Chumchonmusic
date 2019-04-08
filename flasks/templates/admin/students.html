@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Students{% endblock %}</h1>
+{% endblock %}
+
+{% block nav %}
+  <h1>{% block name %}Admin{% endblock %}</h1>
+  <ul>
+    {% if g.admin %}
+      <li><span>{{ g.admin['username'] }}</span>
+      <li><a href="{{ url_for('admin.logout') }}">Log Out</a>
+    {% else %}
+      <li><a href="{{ url_for('admin.login') }}">Log In</a>
+    {% endif %}
+  </ul>
+{% endblock %}
+
+{% block content %}
+  {% for student in students %}
+  <p>{{student['StudentId']}}, {{student['Firstname']}}, {{student['Lastname']}}, {{student['Nickname']}}</p>
+  {% endfor %}
+{% endblock %}

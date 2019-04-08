@@ -1,7 +1,6 @@
 Chumchonmusic
 ======
 **Install Flask** ::
-
   pip install Flask
 
 **Clone the repository** ::
@@ -39,6 +38,7 @@ You’ll see output similar to this: ::
   * Debugger is active!
   * Debugger PIN: 855-212-761
   
-Initialize the Database File: ::
+Initialize the Database File and Admin: ::
 
   flask init-db
+  flask init-admin

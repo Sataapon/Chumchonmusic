@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Log in{% endblock %}</h1>
+{% endblock %}
+
+{% block nav %}
+  <h1>{% block name %}Admin{% endblock %}</h1>
+  <ul>
+    {% if g.admin %}
+      <li><span>{{ g.admin['username'] }}</span>
+      <li><a href="{{ url_for('admin.logout') }}">Log Out</a>
+    {% else %}
+      <li><a href="{{ url_for('admin.login') }}">Log In</a>
+    {% endif %}
+  </ul>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="username">Username</label>
+    <input name="username" id="username" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+    <input type="submit" value="Log In">
+  </form>
+{% endblock %}
+

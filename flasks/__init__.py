@@ -29,6 +29,7 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
+<<<<<<< HEAD
     @app.route("/student/stdlist")
     def showstudent():
         with g.db:
@@ -47,10 +48,16 @@ def create_app(test_config=None):
 
     # register the database
     from . import db
+=======
+    # register the database and admin
+    from . import db, admin
+>>>>>>> refs/remotes/origin/master
     db.init_app(app)
+    admin.init_app(app)
 
     # apply the blueprints to the app
     from . import student, teacher
+    app.register_blueprint(admin.bp)
     app.register_blueprint(student.bp)
     app.register_blueprint(teacher.bp)
 

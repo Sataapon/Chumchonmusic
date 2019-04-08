@@ -1,7 +1,7 @@
 import functools
 
 from flask import (
-        Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -30,7 +30,7 @@ def load_logged_in_teacher():
         g.teacher = None
     else:
         g.teacher = get_db().execute(
-            'SELECT * FROM teacher WHERE TeacherId = ?', (teacher_id,)
+            'SELECT * FROM Teacher WHERE TeacherId = ?', (teacher_id,)
         ).fetchone()
 
 @bp.route('/register', methods=('GET', 'POST'))
