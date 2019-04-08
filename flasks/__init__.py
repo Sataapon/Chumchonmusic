@@ -29,7 +29,6 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
-<<<<<<< HEAD
     @app.route("/student/stdlist")
     def showstudent():
         with g.db:
@@ -46,12 +45,8 @@ def create_app(test_config=None):
             rows = cur.fetchall()
             return render_template('teacher/teacherlist.html', datas = rows)
 
-    # register the database
-    from . import db
-=======
     # register the database and admin
     from . import db, admin
->>>>>>> refs/remotes/origin/master
     db.init_app(app)
     admin.init_app(app)
 

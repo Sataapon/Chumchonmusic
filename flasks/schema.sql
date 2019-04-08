@@ -22,9 +22,9 @@ CREATE TABLE Teacher (
 	Lastname TEXT NOT NULL,
 	Nickname TEXT NOT NULL,
 	Birthday TEXT NOT NULL,
-	Email TEXT NOT NULL,
-	TelNum TEXT NOT NULL,
-	LineId TEXT ,
+	Email TEXT,
+	TelNum TEXT,
+	LineId TEXT,
 	Image BLOB
 );
 
@@ -36,9 +36,9 @@ CREATE TABLE Student (
 	Lastname TEXT NOT NULL,
 	Nickname TEXT NOT NULL,
 	Birthday TEXT NOT NULL,
-	Email TEXT NOT NULL,
-	TelNum TEXT NOT NULL,
-	LineId TEXT ,
+	Email TEXT,
+	TelNum TEXT,
+	LineId TEXT,
 	Image BLOB
 );
 
@@ -68,7 +68,7 @@ CREATE TABLE Teach (
 CREATE TABLE Enroll (
 	CourseId INTEGER,
 	StudentId INTEGER,
-	NumberofAttendance INTEGER,
+	NumOfAttens INTEGER NOT NULL,
 	PRIMARY KEY (CourseId, StudentId),
 	FOREIGN KEY (CourseId) REFERENCES Course (CourseId) ON DELETE CASCADE ON UPDATE CASCADE
 	FOREIGN KEY (StudentId) REFERENCES Student (StudentId) ON DELETE CASCADE ON UPDATE CASCADE

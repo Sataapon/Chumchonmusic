@@ -97,7 +97,6 @@ def students():
     ).fetchall()
     return render_template('admin/students.html', students=students)
 
-
 @bp.route('/teachers')
 def teachers():
     db = get_db()
@@ -106,3 +105,14 @@ def teachers():
     ).fetchall()
     return render_template('admin/teachers.html', teachers=teachers)
 
+@bp.route('/courses')
+def courses():
+    db = get_db()
+    courses = db.execute(
+        'SELECT CourseId, Name FROM Course'
+    ).fetchall()
+    return render_template('admin/courses.html', courses=courses)
+
+@bp.route('/course/create')
+def course_create():
+    return render_template('admin/course_create.html')
