@@ -96,7 +96,7 @@ def login():
             # store the student id in a new session and return to the index
             session.clear()
             session['student_id'] = student['StudentId']
-            return redirect(url_for('hello'))
+            return redirect(url_for('index'))
 
         flash(error)
     
@@ -106,5 +106,5 @@ def login():
 def logout():
     """Clear the current session, including the stored student id."""
     session.clear()
-    return redirect(url_for('hello'))
+    return redirect(url_for('index'))
 

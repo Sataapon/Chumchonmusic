@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block name %}Student{% endblock %} - {% block title %}Register{% endblock %}</h1>
+  <h1>{% block title %}Register{% endblock %}</h1>
+{% endblock %}
+
+{% block nav %}
+  <h1>{% block name %}Student{% endblock %}</h1>
+  <ul>
+    {% if g.student %}
+      <li><span>{{ g.student['username'] }}</span>
+      <li><a href="{{ url_for('student.logout') }}">Log Out</a>
+    {% else %}
+      <li><a href="{{ url_for('student.register') }}">Register</a>
+      <li><a href="{{ url_for('student.login') }}">Log In</a>
+    {% endif %}
+  </ul>
 {% endblock %}
 
 {% block content %}
@@ -22,10 +35,6 @@
     <input type="email" name="email" id="email" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required>
     <label for="telnum">Telephone Number</label>
     <input type="tel" name="telnum" id="telnum" pattern="^(?([0-9]{3}))*-([0-9]{3})*-([0-9]{4})$" placeholder="xxx-xxx-xxxx" required>
-    {#<label for="lineid">Line ID</label>
-    <input name="lineid" id="lineid">
-    <label for="image">Image</label>
-    <input type="file" name="image" id="image">#}
     <input type="submit" value="Register">
   </form>
 {% endblock %}

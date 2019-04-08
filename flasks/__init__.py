@@ -23,14 +23,10 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-    
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
 
+    # homepage
     @app.route("/")
-    def showData():
+    def index():
         return render_template('index.html')
 
     # register the database
@@ -38,10 +34,8 @@ def create_app(test_config=None):
     db.init_app(app)
 
     # apply the blueprints to the app
-    from . import student
+    from . import student, teacher
     app.register_blueprint(student.bp)
-
-    from . import teacher
     app.register_blueprint(teacher.bp)
 
     return app

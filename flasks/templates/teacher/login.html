@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block header %}
+  <h1>{% block title %}Log in{% endblock %}</h1>
+{% endblock %}
+
 {% block nav %}
   <h1>{% block name %}Teacher{% endblock %}</h1>
   <ul>
@@ -11,10 +15,6 @@
       <li><a href="{{ url_for('teacher.login') }}">Log In</a>
     {% endif %}
   </ul>
-{% endblock %}
-
-{% block header %}
-  <h1>{% block title %}Log In{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}

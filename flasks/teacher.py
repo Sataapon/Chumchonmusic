@@ -50,7 +50,7 @@ def register():
         elif not password:
             error = 'Password is required.'
         elif db.execute(
-            'SELECT teacherId FROM teacher WHERE Username = ?', (username,)
+            'SELECT teacherId FROM Teacher WHERE Username = ?', (username,)
         ).fetchone() is not None:
             error = 'User {} is already registered.'.format(username)
 
@@ -84,7 +84,7 @@ def login():
         db = get_db()
         error = None
         teacher = db.execute(
-            'SELECT * FROM teacher WHERE Username = ?', (username,)
+            'SELECT * FROM Teacher WHERE Username = ?', (username,)
         ).fetchone()
 
         if teacher is None:
@@ -96,7 +96,7 @@ def login():
             # store the teacher id in a new session and return to the index
             session.clear()
             session['teacher_id'] = teacher['teacherId']
-            return redirect(url_for('hello'))
+            return redirect(url_for('index'))
 
         flash(error)
     
@@ -106,5 +106,5 @@ def login():
 def logout():
     """Clear the current session, including the stored teacher id."""
     session.clear()
-    return redirect(url_for('hello'))
+    return redirect(url_for('index'))
 
