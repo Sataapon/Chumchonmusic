@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>ChumChonMusic</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1 align="center">ตารางรายชื่อนักเรียน</h1>
+            <table class="table table-boradered">
+            <thead>
+                <tr>
+                    <th>รหัส</th>
+                    <th>ชื่อ</th>
+                    <th>สกุล</th>
+                    <th>ชื่อเล่น</th>
+                    <th>วันเกิด</th>
+                    <th>อีเมล์</th>
+                    <th>เบอร์</th>
+                    <th>LineID</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in datas %}
+                <tr>
+                    <td>{{ row.0 }}</td>
+                    <td>{{ row.3 }}</td>
+                    <td>{{ row.4 }}</td>
+                    <td>{{ row.5 }}</td>
+                    <td>{{ row.6 }}</td>
+                    <td>{{ row.7 }}</td>
+                    <td>{{ row.8 }}</td>
+                    <td>{{ row.9 }}</td>
+                    <td>{{ row.10 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </div>
+    </body>
+</html>

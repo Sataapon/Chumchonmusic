@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, g
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
@@ -28,6 +28,22 @@ def create_app(test_config=None):
     @app.route("/")
     def index():
         return render_template('index.html')
+
+    @app.route("/student/stdlist")
+    def showstudent():
+        with g.db:
+            cur = g.db.cursor()
+            cur.execute("select * from Student")
+            rows = cur.fetchall()
+            return render_template('student/stdlist.html', datas = rows)
+
+    @app.route("/teacher/teacherlist")
+    def showteacher():
+        with g.db:
+            cur = g.db.cursor()
+            cur.execute("select * from Teacher")
+            rows = cur.fetchall()
+            return render_template('teacher/teacherlist.html', datas = rows)
 
     # register the database
     from . import db
