@@ -38,3 +38,7 @@ You’ll see output similar to this: ::
   * Restarting with stat
   * Debugger is active!
   * Debugger PIN: 855-212-761
+  
+Initialize the Database File: ::
+
+  flask init-db
