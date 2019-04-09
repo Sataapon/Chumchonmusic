@@ -108,3 +108,40 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
+@bp.route('/schedule') # methods=('GET', 'POST'))
+@login_required
+def schedule():
+    """Show student schedule by query database """
+    teacher_id = session.get('teacher_id')
+
+    db = get_db()
+    teachers = db.execute(
+        'select Study.Day, Study.Time, Student.Nickname, Course.Name, Instrument.Name, Teacher.Nickname from Student\
+            join Enroll on Student.StudentId = Enroll.StudentId\
+                 join Course on Enroll.CourseId = Course.CourseId\
+                      join Teach on Teach.CourseId = Course.CourseId\
+                           join Teacher on Teacher.TeacherId = Teach.TeacherId\
+                                join Instrument on Instrument.InstrumentId = Course.InstrumentId\
+                                     join Study on Study.StudentId = Enroll.StudentId\
+                                            where Teacher.TeacherId = ? order by day, time', (teacher_id,)
+    ).fetchall()
+    return render_template('teacher/schedule.html', teachers= teachers)
+
+# @bp.route('/schedule')
+# @login_required
+# def students():
+#     db = get_db()
+#     students = db.execute(
+#         'SELECT StudentId, Firstname, Lastname, Nickname FROM Student'
+#     ).fetchall()
+#     return render_template('teacher/schedule.html', students=students)
+
+
+@bp.route('/students')
+@login_required
+def students():
+    db = get_db()
+    students = db.execute(
+        'SELECT StudentId, Firstname, Lastname, Nickname FROM Student'
+    ).fetchall()
+    return render_template('admin/students.html', students=students)

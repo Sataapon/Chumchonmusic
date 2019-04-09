@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Schedule - ครู {{ g.teacher['nickname'] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block nav %}
+<h1>{% block name %}Teacher{% endblock %}</h1>
+    <ul>
+        {% if g.teacher %}
+            <li><span>{{ g.teacher['username'] }}</span>
+            <li><a href="{{ url_for('teacher.logout') }}">Log Out</a>
+        {% else %}
+            <li><a href="{{ url_for('teacher.register') }}">Register</a>
+            <li><a href="{{ url_for('teacher.login') }}">Log In</a>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <style >
+            table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+            th, td {
+            padding: 5px;
+            text-align: center;
+            }
+    </style>
+    <table style="width:100%">
+            <tr>
+                <th>วัน</th>
+                <th>เวลา</th>
+                <th>ชื่อ</th>
+            </tr>
+        <tbody>
+        {% for row in teachers %}
+            <tr>
+                <td>{{ row.0 }}</td>
+                <td>{{ row.1 }}</td>
+                <td>{{ row.2 }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+</html>
