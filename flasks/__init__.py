@@ -37,6 +37,21 @@ def create_app(test_config=None):
             rows = cur.fetchall()
             return render_template('student/stdlist.html', datas = rows)
 
+    @app.route("/student/study")
+    def showstudy():
+        with g.db:
+            cur = g.db.cursor()
+            cur.execute("select Student.Nickname, Instrument.Name, Course.Name, Teacher.Nickname, Study.Day, Study.Time from Student\
+                join Enroll\
+                    on Student.StudentId = Enroll.StudentId\
+                    join Course on Enroll.CourseId = Course.CourseId\
+                    join Teach on Teach.CourseId = Course.CourseId\
+                    join Teacher on Teacher.TeacherId = Teach.TeacherId\
+                    join Instrument on Instrument.InstrumentId = Course.InstrumentId\
+                    join Study on Study.StudentId = Enroll.StudentId")
+            rows = cur.fetchall()
+            return render_template('student/study.html', datas = rows)
+
     @app.route("/teacher/teacherlist")
     def showteacher():
         with g.db:
