@@ -77,6 +77,7 @@ CREATE TABLE Enroll (
 CREATE TABLE Study (
 	TeacherId INTEGER,
 	StudentId INTEGER,
+	NumOfAttens INTEGER,
 	PRIMARY KEY (TeacherId, StudentId)
 	FOREIGN KEY (TeacherId) REFERENCES Teacher (TeacherId) ON DELETE CASCADE ON UPDATE CASCADE
 	FOREIGN KEY (StudentId) REFERENCES Student (StudentId) ON DELETE CASCADE ON UPDATE CASCADE
@@ -87,7 +88,6 @@ CREATE TABLE DayTime (
 	StudentId INTEGER,
 	Day TEXT,
 	Time TEXT,	
-	NumOfAttens INTEGER,
 	PRIMARY KEY (TeacherId, StudentId, Day, Time),
 	FOREIGN KEY (TeacherId, StudentId) REFERENCES Study (TeacherId, StudentId) ON DELETE CASCADE ON UPDATE CASCADE
 );
