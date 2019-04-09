@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Profile{% endblock %}</h1>
+{% endblock %}
+
+{% block nav %}
+<h1>{% block name %}Student{% endblock %}</h1>
+<ul>
+  {% if g.student %}
+  <li><span>{{ g.student['username'] }}</span>
+    <li><a href="{{ url_for('student.logout') }}">Log Out</a>
+      {% else %}
+      <li><a href="{{ url_for('student.register') }}">Register</a>
+        <li><a href="{{ url_for('student.login') }}">Log In</a>
+          {% endif %}
+        </ul>
+        {% endblock %}
+        
+        {% block content %}
+        <br> Name - ชื่อ : {{ profile.FirstName }} {{ profile.Lastname }} 
+        <br> Nickname - ชื่อเล่น : {{ profile.Nickname }}
+        <br> Birthday - วันเกิด : {{ profile.Birthday }}
+        <br> E-mail - อีเมล์ : {{ profile.email }}
+        <br> Telephone No. - เบอร์โทรศัพท์ : {{ profile.telnum }}
+        
+        <header><h1>Schedule</h1></header>
+        {% for row in data %}
+        {{ row.Day }}, {{ row.Time }} | Course - เรียน : {{ row.4}} | Level - ระดับ : {{ row.3}} | Teacher - ครู : {{ row.5}}
+        <br>
+        {% endfor %}
+        {% endblock %}
+        

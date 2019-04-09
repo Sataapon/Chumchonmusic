@@ -25,7 +25,6 @@ def load_logged_in_student():
     """If a student id is stored in the session, load the student object from
     the database into ``g.student``."""
     student_id = session.get('student_id')
-    print(student_id)
     if student_id is None:
         g.student = None
     else:
@@ -109,6 +108,10 @@ def schedule():
 
     db = get_db()
     error = None
+    student_profile = db.execute(
+        'select Nickname, Firstname, Lastname, Birthday, email, telnum from Student where studentid = ?', (student_id,)
+    ).fetchone()
+
     student = db.execute(
         'select Study.Day, Study.Time, Student.Nickname, Course.Name, Instrument.Name, Teacher.Nickname from Student\
             join Enroll on Student.StudentId = Enroll.StudentId\
@@ -119,7 +122,7 @@ def schedule():
                                      join Study on Study.StudentId = Enroll.StudentId\
                                           where Student.StudentId = ?', (student_id,)
     ).fetchall()
-    return render_template('student/schedule.html', data= student)
+    return render_template('student/schedule.html', data = student, profile = student_profile)
 
 @bp.route('/logout')
 def logout():
