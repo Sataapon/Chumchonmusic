@@ -42,3 +42,4 @@ Initialize the Database File and Admin: ::
 
   flask init-db
   flask init-admin
+  flask init-instruments

@@ -48,9 +48,26 @@ def create_app(test_config=None):
                     join Teach on Teach.CourseId = Course.CourseId\
                     join Teacher on Teacher.TeacherId = Teach.TeacherId\
                     join Instrument on Instrument.InstrumentId = Course.InstrumentId\
-                    join Study on Study.StudentId = Enroll.StudentId")
+                    join Study on Study.StudentId = Enroll.StudentId\
+                    order by Teacher.Nickname,day,time")
             rows = cur.fetchall()
             return render_template('student/study.html', datas = rows)
+
+    @app.route("/teacher/teach")
+    def showteach():
+        with g.db:
+            cur = g.db.cursor()
+            cur.execute("select Teacher.Nickname, Study.Day, Study.Time, Student.Nickname, Instrument.Name, Course.Name from Student\
+                    join Enroll\
+                        on Student.StudentId = Enroll.StudentId\
+                        join Course on Enroll.CourseId = Course.CourseId\
+                        join Teach on Teach.CourseId = Course.CourseId\
+                        join Teacher on Teacher.TeacherId = Teach.TeacherId\
+                        join Instrument on Instrument.InstrumentId = Course.InstrumentId\
+                        join Study on Study.StudentId = Enroll.StudentId\
+                    order by Teacher.Nickname,day,time")
+            rows = cur.fetchall()
+            return render_template('teacher/teach.html', datas = rows)
 
     @app.route("/teacher/teacherlist")
     def showteacher():
