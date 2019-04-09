@@ -24,17 +24,34 @@ def init_admin_command():
     init_admin()
     click.echo('Initialized admin.')
 
+def init_instruments():
+    """Create instruments"""
+    db = get_db()
+
+    instruments = [('Guitar',), ('Paino',), ('Drums',)]
+    db.executemany(
+        'INSERT INTO Instrument (Name) VALUES (?)', instruments)
+    db.commit()
+
+@click.command('init-instruments')
+@with_appcontext
+def init_instruments_command():
+    """Create command to initialized instruments."""
+    init_instruments()
+    click.echo('Initialized instruments.')
+
 def init_app(app):
     """Register admin functions with the Flask app. This is called by
     the appliciation factory.
     """
     app.cli.add_command(init_admin_command)
-
+    app.cli.add_command(init_instruments_command)
+    
 bp = Blueprint('admin', __name__, url_prefix='/admin')
 
 def login_required(view):
     """View decorator that redirects anonymous admins to the login pages."""
-    @functools.wrapgs(view)
+    @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.admin is None:
             return redirect(url_for('admin.login'))
@@ -90,6 +107,7 @@ def logout():
     return redirect(url_for('index'))
 
 @bp.route('/students')
+@login_required
 def students():
     db = get_db()
     students = db.execute(
@@ -98,6 +116,7 @@ def students():
     return render_template('admin/students.html', students=students)
 
 @bp.route('/teachers')
+@login_required
 def teachers():
     db = get_db()
     teachers = db.execute(
@@ -106,6 +125,7 @@ def teachers():
     return render_template('admin/teachers.html', teachers=teachers)
 
 @bp.route('/courses')
+@login_required
 def courses():
     db = get_db()
     courses = db.execute(
@@ -113,6 +133,24 @@ def courses():
     ).fetchall()
     return render_template('admin/courses.html', courses=courses)
 
-@bp.route('/course/create')
-def course_create():
-    return render_template('admin/course_create.html')
+@bp.route('/course/create', methods=('GET', 'POST'))
+@login_required
+def create_course():
+    db = get_db()
+    if request.method == 'POST':
+        values = ()
+        for key in request.form:
+            if key == 'instrument':
+                values += (int(db.execute('SELECT InstrumentId FROM Instrument WHERE Name = ?',(request.form[key],)).fetchone()['InstrumentId']),)
+            elif key == 'price' or key == 'houspertime' or key == 'numoftimes':
+                values += (int(request.form[key]),)
+            else:
+                values += (request.form[key],)
+        db.execute('INSERT INTO Course (Name, Price, HousPerTime, NumOfTimes, InstrumentId) VALUES (?, ?, ?, ?, ?)', values)
+        db.commit()
+
+        return redirect(url_for('index'))
+
+    instruments = db.execute('SELECT Name FROM Instrument').fetchall()
+    return render_template('admin/course/create.html', instruments=instruments)
+

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Create Course{% endblock %}</h1>
+{% endblock %}
+
+{% block nav %}
+  <h1>{% block name %}Admin{% endblock %}</h1>
+  <ul>
+    {% if g.admin %}
+      <li><span>{{ g.admin['username'] }}</span>
+      <li><a href="{{ url_for('admin.logout') }}">Log Out</a>
+    {% else %}
+      <li><a href="{{ url_for('admin.login') }}">Log In</a>
+    {% endif %}
+  </ul>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="name">Name</label>
+    <input name="name" id="name" required>
+    <label for="price">Price</label>
+    <input type="number" name="price" id="price" step="100" min="100" max="5000" required>
+    <label for="houspertime">Houses Per Time</label>
+    <input type="number" name="houspertime" id="houspertime" min="1" max="2"  required>
+    <label for="numoftimes">Number of Times</label>
+    <input type="number" name="numoftimes" id="numoftimes" value="4" min="4" max="4" required>
+    <label for="instrument">Instrument</label>
+    <select name="instrument" id="instrument" required>
+    {% for instrument in instruments %}
+    	<option value="{{ instrument.Name }}">{{ instrument.Name }}</option>
+    {% endfor %}
+    </select>
+    <input type="submit" value="Create">
+  </form>
+{% endblock %}
