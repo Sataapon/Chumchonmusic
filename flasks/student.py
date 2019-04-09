@@ -25,7 +25,7 @@ def load_logged_in_student():
     """If a student id is stored in the session, load the student object from
     the database into ``g.student``."""
     student_id = session.get('student_id')
-
+    print(student_id)
     if student_id is None:
         g.student = None
     else:
@@ -86,7 +86,7 @@ def login():
         student = db.execute(
             'SELECT * FROM Student WHERE Username = ?', (username,)
         ).fetchone()
-
+        # print(student.fetchall())
         if student is None:
             error = 'Incorrect username.'
         elif not check_password_hash(student['Password'], password):
@@ -101,6 +101,25 @@ def login():
         flash(error)
     
     return render_template('student/login.html')
+
+@bp.route('/schedule', methods=('GET', 'POST'))
+def schedule():
+    """Show student schedule by query database """
+    student_id = session.get('student_id')
+
+    db = get_db()
+    error = None
+    student = db.execute(
+        'select Study.Day, Study.Time, Student.Nickname, Course.Name, Instrument.Name, Teacher.Nickname from Student\
+            join Enroll on Student.StudentId = Enroll.StudentId\
+                 join Course on Enroll.CourseId = Course.CourseId\
+                      join Teach on Teach.CourseId = Course.CourseId\
+                           join Teacher on Teacher.TeacherId = Teach.TeacherId\
+                                join Instrument on Instrument.InstrumentId = Course.InstrumentId\
+                                     join Study on Study.StudentId = Enroll.StudentId\
+                                          where Student.StudentId = ?', (student_id,)
+    ).fetchall()
+    return render_template('student/schedule.html', data= student)
 
 @bp.route('/logout')
 def logout():
