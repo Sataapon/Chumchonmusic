@@ -17,7 +17,36 @@
 {% endblock %}
 
 {% block content %}
-  {% for course in courses %}
-  <p>{{course['CourseId']}}, {{course['Name']}}</p>
-  {% endfor %}
+    <style >
+            table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+            th, td {
+            padding: 5px;
+            text-align: center;
+            }
+    </style>
+    <table style="width:100%">
+            <tr>
+                <th>วิขา</th>
+                <th>ระดับ</th>
+                <th>ราคา</th>
+                <th>ครูผู้สอน</th>
+                <th>ชั่วโมง/ครั้ง</th>
+                <th>จำนวนครั้ง</th>
+            </tr>
+        <tbody>
+        {% for row in datas %}
+            <tr>
+                <td>{{ row.0 }}</td>
+                <td>{{ row.1 }}</td>
+                <td>{{ row.2 }}</td>
+                <td>{{ row.3 }}</td>
+                <td>{{ row.4 }}</td>
+                <td>{{ row.5 }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

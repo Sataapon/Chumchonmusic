@@ -110,28 +110,27 @@ def logout():
 @login_required
 def students():
     db = get_db()
-    students = db.execute(
-        'SELECT StudentId, Firstname, Lastname, Nickname FROM Student'
-    ).fetchall()
-    return render_template('admin/students.html', students=students)
+    rows = db.execute('select * from Student').fetchall()
+    return render_template('admin/students.html', datas=rows)
 
 @bp.route('/teachers')
 @login_required
 def teachers():
     db = get_db()
-    teachers = db.execute(
-        'SELECT TeacherId, Firstname, Lastname, Nickname FROM Teacher'
-    ).fetchall()
-    return render_template('admin/teachers.html', teachers=teachers)
+    rows = db.execute('select * from Teacher').fetchall()
+    return render_template('admin/teachers.html', datas=rows)
 
 @bp.route('/courses')
 @login_required
 def courses():
     db = get_db()
-    courses = db.execute(
-        'SELECT CourseId, Name FROM Course'
+    course_list = db.execute(
+        'select instrument.name, Course.name as level, Course.price, teacher.Nickname, Course.HousPerTime, Course.NumOfTime from Course\
+                    left join Instrument on Instrument.InstrumentId = Course.InstrumentId\
+                        join Teach on Teach.CourseId = Course.CourseId\
+                            join Teacher on Teacher.TeacherId = teach.TeacherId'
     ).fetchall()
-    return render_template('admin/courses.html', courses=courses)
+    return render_template('admin/courses.html', datas= course_list)
 
 @bp.route('/course/create', methods=('GET', 'POST'))
 @login_required

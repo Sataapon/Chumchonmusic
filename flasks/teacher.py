@@ -96,7 +96,7 @@ def login():
             # store the teacher id in a new session and return to the index
             session.clear()
             session['teacher_id'] = teacher['teacherId']
-            return redirect(url_for('index'))
+            return redirect(url_for('teacher.schedule'))
 
         flash(error)
     

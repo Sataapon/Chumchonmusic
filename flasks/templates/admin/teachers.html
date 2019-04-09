@@ -17,7 +17,38 @@
 {% endblock %}
 
 {% block content %}
-  {% for teacher in teachers %}
-  <p>{{teacher['TeacherId']}}, {{teacher['Firstname']}}, {{teacher['Lastname']}}, {{teacher['Nickname']}}</p>
-  {% endfor %}
+    <style >
+            table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+            th, td {
+            padding: 5px;
+            text-align: center;
+            }
+    </style>
+    <table style="width:100%">
+            <tr>
+                <th>รหัส</th>
+                <th>ชื่อ</th>
+                <th>สกุล</th>
+                <th>ชื่อเล่น</th>
+                <th>วันเกิด</th>
+                <th>อีเมล์</th>
+                <th>เบอร์</th>
+            </tr>
+        <tbody>
+        {% for row in datas %}
+            <tr>
+                <td>{{ row.0 }}</td>
+                <td>{{ row.3 }}</td>
+                <td>{{ row.4 }}</td>
+                <td>{{ row.5 }}</td>
+                <td>{{ row.6 }}</td>
+                <td>{{ row.7 }}</td>
+                <td>{{ row.8 }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

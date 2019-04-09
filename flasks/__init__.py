@@ -29,6 +29,19 @@ def create_app(test_config=None):
     def index():
         return render_template('/index.html')
 
+    @app.route("/course")
+    def course():
+        """Show course available various level"""
+        with g.db:
+            cur = g.db.cursor()
+            cur.execute(
+                'select Course.name as level, Course.price, instrument.name, teacher.Nickname, Course.HousPerTime, Course.NumOfTime from Course\
+                    left join Instrument on Instrument.InstrumentId = Course.InstrumentId\
+                        join Teach on Teach.CourseId = Course.CourseId\
+                            join Teacher on Teacher.TeacherId = teach.TeacherId')
+            course_list = cur.fetchall()
+            return render_template('course.html', datas = course_list)
+
     @app.route("/student/stdlist")
     def showstudent():
         with g.db:
