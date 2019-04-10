@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}Schedule - ครู {{ g.teacher['nickname'] }}{% endblock %}</h1>
+    <h1>{% block title %}Profile{% endblock %}</h1>
 {% endblock %}
 
 {% block nav %}
@@ -18,6 +18,13 @@
 {% endblock %}
 
 {% block content %}
+    <br> Name - ชื่อ : {{ profile.FirstName }} {{ profile.Lastname }}
+    <br> Nickname - ชื่อเล่น : {{ profile.Nickname }}
+    <br> Birthday - วันเกิด : {{ profile.Birthday }}
+    <br> E-mail - อีเมล์ : {{ profile.email }}
+    <br> Telephone No. - เบอร์โทรศัพท์ : {{ profile.telnum }}
+
+    <header><h1>Schedule</h1></header>
     <style >
             table, th, td {
             border: 1px solid black;

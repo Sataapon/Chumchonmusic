@@ -94,7 +94,7 @@ def login():
             # store the admin id in a new session and return to the index
             session.clear()
             session['admin_id'] = admin['AdminId']
-            return redirect(url_for('index'))
+            return redirect(url_for('admin.index'))
 
         flash(error)
     
@@ -105,6 +105,11 @@ def logout():
     """Clear the current session, including the stored student id."""
     session.clear()
     return redirect(url_for('index'))
+
+@bp.route('/')
+@login_required
+def index():
+    return render_template('admin/admin.html')
 
 @bp.route('/students')
 @login_required
@@ -124,13 +129,17 @@ def teachers():
 @login_required
 def courses():
     db = get_db()
+    rows = db.execute('select Instrument.Name as InsName, Course.Name as CouName, Price, HousPerTime, NumOfTimes \
+            from Course join Instrument ON Course.CourseId = Instrument.InstrumentId').fetchall()
+    """
     course_list = db.execute(
-        'select instrument.name, Course.name as level, Course.price, teacher.Nickname, Course.HousPerTime, Course.NumOfTime from Course\
-                    left join Instrument on Instrument.InstrumentId = Course.InstrumentId\
-                        join Teach on Teach.CourseId = Course.CourseId\
+        'select instrument.name, Course.name as level, Course.price, teacher.Nickname, Course.HousPerTime, Course.NumOfTimes from Course \
+                    left join Instrument on Instrument.InstrumentId = Course.InstrumentId \
+                        join Teach on Teach.CourseId = Course.CourseId \
                             join Teacher on Teacher.TeacherId = teach.TeacherId'
     ).fetchall()
-    return render_template('admin/courses.html', datas= course_list)
+    """
+    return render_template('admin/courses.html', datas=rows)
 
 @bp.route('/course/create', methods=('GET', 'POST'))
 @login_required

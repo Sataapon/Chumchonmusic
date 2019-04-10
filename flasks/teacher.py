@@ -115,6 +115,10 @@ def schedule():
     teacher_id = session.get('teacher_id')
 
     db = get_db()
+    teacher_profile = db.execute(
+        'select Nickname, Firstname, Lastname, Birthday, email, telnum from Teacher where teacherid = ?', (teacher_id,)
+    ).fetchone()
+
     teachers = db.execute(
         'select Study.Day, Study.Time, Student.Nickname, Course.Name, Instrument.Name, Teacher.Nickname from Student\
             join Enroll on Student.StudentId = Enroll.StudentId\
@@ -125,7 +129,7 @@ def schedule():
                                      join Study on Study.StudentId = Enroll.StudentId\
                                             where Teacher.TeacherId = ? order by day, time', (teacher_id,)
     ).fetchall()
-    return render_template('teacher/schedule.html', teachers= teachers)
+    return render_template('teacher/schedule.html', profile=teacher_profile, teachers=teachers)
 
 # @bp.route('/schedule')
 # @login_required

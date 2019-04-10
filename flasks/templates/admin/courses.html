@@ -29,24 +29,26 @@
     </style>
     <table style="width:100%">
             <tr>
-                <th>วิขา</th>
-                <th>ระดับ</th>
+                <th>เครื่องดนตรี</th>
+                <th>คอร์ส</th>
                 <th>ราคา</th>
-                <th>ครูผู้สอน</th>
                 <th>ชั่วโมง/ครั้ง</th>
                 <th>จำนวนครั้ง</th>
+
             </tr>
         <tbody>
         {% for row in datas %}
             <tr>
-                <td>{{ row.0 }}</td>
-                <td>{{ row.1 }}</td>
-                <td>{{ row.2 }}</td>
-                <td>{{ row.3 }}</td>
-                <td>{{ row.4 }}</td>
-                <td>{{ row.5 }}</td>
+                <td>{{ row.InsName }}</td>
+                <td>{{ row.CouName }}</td>
+		<td>{{ row.Price }}</td>
+                <td>{{ row.HousPerTime }}</td>
+                <td>{{ row.NumOfTimes }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <ul>
+    <li><a href="{{ url_for('admin.create_course') }}">Create Course</a>
+    </ul>
 {% endblock %}
