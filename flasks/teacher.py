@@ -120,13 +120,13 @@ def index():
     ).fetchone()
 
     teachers = db.execute(
-        'select Study.Day, Study.Time, Student.Nickname, Course.Name, Instrument.Name, Teacher.Nickname from Student\
-            join Enroll on Student.StudentId = Enroll.StudentId\
-                 join Course on Enroll.CourseId = Course.CourseId\
-                      join Teach on Teach.CourseId = Course.CourseId\
-                           join Teacher on Teacher.TeacherId = Teach.TeacherId\
-                                join Instrument on Instrument.InstrumentId = Course.InstrumentId\
-                                     join Study on Study.StudentId = Enroll.StudentId\
+        'select Study.Day, Study.Time, Student.Nickname, Course.Name, Instrument.Name, Teacher.Nickname from Student \
+            join Enroll on Student.StudentId = Enroll.StudentId \
+                 join Course on Enroll.CourseId = Course.CourseId \
+                      join Teach on Teach.CourseId = Course.CourseId \
+                           join Teacher on Teacher.TeacherId = Teach.TeacherId \
+                                join Instrument on Instrument.InstrumentId = Course.InstrumentId \
+                                     join Study on Study.StudentId = Enroll.StudentId \
                                             where Teacher.TeacherId = ? order by day, time', (teacher_id,)
     ).fetchall()
     return render_template('teacher/index.html', profile=teacher_profile, teachers=teachers)

@@ -28,28 +28,15 @@
         <div class="container">
             <h1 align="center">ChumChonMusic</h1></br>
             <div class="row">
-                {% if g.student %}
                 <div class="column" style="background-color:#e6f7ff;">
-                    <center><a href="/student/stdlist" class="btn btn-primary" >ตารางรายชื่อนักเรียน</a></center></br>
-                    <center><a href="/student/study" class="btn btn-primary" >รายละเอียด</a></center></br>
-                    <center><a href="/student/login" class="btn btn-primary" >Student Login</a></center></br>
-                    <center><a href="/student/register" class="btn btn-primary" >Student Register</a></center></br>
-                </div>
-                {% elif g.teacher %}
-                <div class="column" style="background-color:#e6ffe6;">
-                    <center><a href="/teacher/teacherlist" class="btn btn-success" >ตารางรายชื่อครูสอนดนตรี</a></center></br>
-                    <center><a href="/teacher/schedule" class="btn btn-success" >ตารางสอน</a></center></br>
-                    <center><a href="/teacher/login" class="btn btn-success" >Teacher Login</a></center></br>
-                    <center><a href="/teacher/register" class="btn btn-success" >Teacher Register</a></center></br>
-                </div>
-                {% else %}
-                <div class="column" style="background-color:#e6f7ff;">
-                        <center><a href="/student/login" class="btn btn-primary" >Student Login</a></center></br>
+			<center><a href="/student/login" class="btn btn-primary" >Student Login</a></center></br>
                 </div>
                 <div class="column" style="background-color:#e6ffe6;">
-                        <center><a href="/teacher/login" class="btn btn-success" >Teacher Login</a></center></br>
+			<center><a href="/teacher/login" class="btn btn-success" >Teacher Login</a></center></br>
                 </div>
-                {% endif %}
+                <div class="column" style="background-color:#e6ffa7;">
+			<center><a href="/course" class="btn btn-success" >Courses</a></center></br>
+                </div>
             </div>
     </body>
 </html>

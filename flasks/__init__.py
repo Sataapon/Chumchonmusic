@@ -29,76 +29,16 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
-    @app.route("/course")
-    def course():
-        """Show course available various level"""
-        with g.db:
-            cur = g.db.cursor()
-            cur.execute(
-                'select Course.name as level, Course.price, instrument.name, teacher.Nickname, Course.HousPerTime, Course.NumOfTime from Course\
-                    left join Instrument on Instrument.InstrumentId = Course.InstrumentId\
-                        join Teach on Teach.CourseId = Course.CourseId\
-                            join Teacher on Teacher.TeacherId = teach.TeacherId')
-            course_list = cur.fetchall()
-            return render_template('course.html', datas = course_list)
-
-    @app.route("/student/stdlist")
-    def showstudent():
-        with g.db:
-            cur = g.db.cursor()
-            cur.execute("select * from Student")
-            rows = cur.fetchall()
-            return render_template('student/stdlist.html', datas = rows)
-
-    @app.route("/student/study")
-    def showstudy():
-        with g.db:
-            cur = g.db.cursor()
-            cur.execute("select Student.Nickname, Instrument.Name, Course.Name, Teacher.Nickname, Study.Day, Study.Time from Student\
-                join Enroll\
-                    on Student.StudentId = Enroll.StudentId\
-                    join Course on Enroll.CourseId = Course.CourseId\
-                    join Teach on Teach.CourseId = Course.CourseId\
-                    join Teacher on Teacher.TeacherId = Teach.TeacherId\
-                    join Instrument on Instrument.InstrumentId = Course.InstrumentId\
-                    join Study on Study.StudentId = Enroll.StudentId\
-                    order by Teacher.Nickname,day,time")
-            rows = cur.fetchall()
-            return render_template('student/study.html', datas = rows)
-
-    @app.route("/teacher/teach")
-    def showteach():
-        with g.db:
-            cur = g.db.cursor()
-            cur.execute("select Teacher.Nickname, Study.Day, Study.Time, Student.Nickname, Instrument.Name, Course.Name from Student\
-                    join Enroll\
-                        on Student.StudentId = Enroll.StudentId\
-                        join Course on Enroll.CourseId = Course.CourseId\
-                        join Teach on Teach.CourseId = Course.CourseId\
-                        join Teacher on Teacher.TeacherId = Teach.TeacherId\
-                        join Instrument on Instrument.InstrumentId = Course.InstrumentId\
-                        join Study on Study.StudentId = Enroll.StudentId\
-                    order by Teacher.Nickname,day,time")
-            rows = cur.fetchall()
-            return render_template('teacher/teach.html', datas = rows)
-
-    @app.route("/teacher/teacherlist")
-    def showteacher():
-        with g.db:
-            cur = g.db.cursor()
-            cur.execute("select * from Teacher")
-            rows = cur.fetchall()
-            return render_template('teacher/teacherlist.html', datas = rows)
-
     # register the database and admin
     from . import db, admin
     db.init_app(app)
     admin.init_app(app)
 
     # apply the blueprints to the app
-    from . import student, teacher
+    from . import student, teacher, course
     app.register_blueprint(admin.bp)
     app.register_blueprint(student.bp)
     app.register_blueprint(teacher.bp)
+    app.register_blueprint(course.bp)
 
     return app

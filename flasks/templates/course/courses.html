@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}List Of Courses{% endblock %}</h1>
+{% endblock %}
+
+{% block nav %}
+  <h1>{% block name %}Course{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <style >
+            table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+            th, td {
+            padding: 5px;
+            text-align: center;
+            }
+    </style>
+    <table style="width:100%">
+            <tr>
+                <th>เครื่องดนตรี</th>
+                <th>คอร์ส</th>
+                <th>ชื่อเล่น</th>
+		<th>ชื่อจริง</th>
+		<th>นามสกุล</th>
+            </tr>
+        <tbody>
+        {% for course in courses %}
+            <tr>
+                <td>{{ course.InsName }}</td>
+                <td>{{ course.CouName }}</td>
+                <td>{{ course.Nickname }}</td>
+		<td>{{ course.Firstname }}</td>
+		<td>{{ course.Lastname }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
