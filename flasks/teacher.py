@@ -96,7 +96,7 @@ def login():
             # store the teacher id in a new session and return to the index
             session.clear()
             session['teacher_id'] = teacher['teacherId']
-            return redirect(url_for('teacher.schedule'))
+            return redirect(url_for('teacher.index'))
 
         flash(error)
     
@@ -108,10 +108,10 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-@bp.route('/schedule') # methods=('GET', 'POST'))
+@bp.route('/')
 @login_required
-def schedule():
-    """Show student schedule by query database """
+def index():
+    """Show teacher schedule by query database """
     teacher_id = session.get('teacher_id')
 
     db = get_db()
@@ -129,23 +129,4 @@ def schedule():
                                      join Study on Study.StudentId = Enroll.StudentId\
                                             where Teacher.TeacherId = ? order by day, time', (teacher_id,)
     ).fetchall()
-    return render_template('teacher/schedule.html', profile=teacher_profile, teachers=teachers)
-
-# @bp.route('/schedule')
-# @login_required
-# def students():
-#     db = get_db()
-#     students = db.execute(
-#         'SELECT StudentId, Firstname, Lastname, Nickname FROM Student'
-#     ).fetchall()
-#     return render_template('teacher/schedule.html', students=students)
-
-
-@bp.route('/students')
-@login_required
-def students():
-    db = get_db()
-    students = db.execute(
-        'SELECT StudentId, Firstname, Lastname, Nickname FROM Student'
-    ).fetchall()
-    return render_template('admin/students.html', students=students)
+    return render_template('teacher/index.html', profile=teacher_profile, teachers=teachers)

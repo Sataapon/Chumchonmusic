@@ -95,14 +95,22 @@ def login():
             # store the student id in a new session and return to the index
             session.clear()
             session['student_id'] = student['StudentId']
-            return redirect(url_for('student.schedule'))
+            return redirect(url_for('student.index'))
 
         flash(error)
     
     return render_template('student/login.html')
 
-@bp.route('/schedule', methods=('GET', 'POST'))
-def schedule():
+
+@bp.route('/logout')
+def logout():
+    """Clear the current session, including the stored student id."""
+    session.clear()
+    return redirect(url_for('index'))
+
+@bp.route('/')
+@login_required
+def index():
     """Show student schedule by query database """
     student_id = session.get('student_id')
 
@@ -122,12 +130,7 @@ def schedule():
                                      join Study on Study.StudentId = Enroll.StudentId\
                                           where Student.StudentId = ?', (student_id,)
     ).fetchall()
-    return render_template('student/schedule.html', data = student, profile = student_profile)
+    return render_template('student/index.html', data = student, profile = student_profile)
 
-@bp.route('/logout')
-def logout():
-    """Clear the current session, including the stored student id."""
-    session.clear()
-    return redirect(url_for('index'))
 
 
